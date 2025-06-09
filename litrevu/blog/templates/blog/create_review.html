@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Billet</h2>
+<p>rédiger votre critique pour {{ ticket.title }}</p>
+<img src="{{ ticket.image.url }}" alt="{{ ticket.title }}">
+<p>Description : {{ ticket.description }}</p>
+<p>Publié par : {{ ticket.uploader }}</p>
+<p>le {{ ticket.time_created }}</p>
+<h2>Publier une critique : </h2>
+<form action="" method="post">
+  {{ review_form.as_p }}
+  {% csrf_token %}
+  <button type="submit">Publier</button>
+</form>
+{% endblock content %}

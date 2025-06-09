@@ -1,4 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-<p>Vous êtes connecté</p>
+  <h2>Billet : </h2>
+  <div class="flux">
+    {% for ticket in tickets %}
+    <div class="post">
+      <a href="{% url 'create-review' ticket.id %}"><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}">
+        <p>{{ ticket.title }}</p>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  <h2>Critique :</h2>
+    <div class="flux">
+    {% for review in reviews %}
+    <div class="post">
+      <a href="{% url 'view-review' review.ticket.id review.id %}">
+        <p>{{ review.rating }} stars</p>
+        <p>{{ review.headline }}</p>
+        <p>{{ review.user }} {{ review.time_created }}</p>
+      </a>
+    </div>
+    {% endfor %}
 {% endblock %}

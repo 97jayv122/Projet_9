@@ -8,6 +8,14 @@ body {
     width: 1200px;
     padding: 20px;
 }
+
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+
 header {
     display:flex;
     align-items: center;
@@ -28,4 +36,14 @@ header nav {
 
 nav a {
     padding-left: 10px;
+}
+
+
+.flux, .post {
+    display: flexbox;
+}
+
+
+.flux {
+    flex-direction: column;
 }
