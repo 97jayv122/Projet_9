@@ -1,11 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from . import forms, models
+
 # Create your views here.
 @login_required
 def home(request):
-    tickets = models.Ticket.objects.all()
-    reviews = models.Review.objects.all()
+    tickets = models.Ticket.objects.filter(
+        uploader__in=request.user.follows.all()
+    )
+    reviews = models.Review.objects.filter(
+        user__in=request.user.follows.all()
+    )
     return render(request,
                   'blog/home.html', context={
                       'tickets': tickets,
