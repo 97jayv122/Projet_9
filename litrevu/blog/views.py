@@ -1,9 +1,12 @@
 from itertools import chain
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.db.models import Q
 from . import forms, models
 
+
+User = get_user_model()
 # Create your views here.
 @login_required
 def home(request):
@@ -104,3 +107,9 @@ def follow_users(request):
             return redirect('home')
     return render(request,
                   'blog/follow_users_form.html', context={'form': form})
+
+@login_required
+def unfollow_users(request, user_id):
+    cible = get_object_or_404(User, id=user_id)
+    request.user.follows.remove(cible)
+    return redirect('follow_users')

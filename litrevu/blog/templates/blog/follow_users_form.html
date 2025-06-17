@@ -8,8 +8,15 @@
   </form>
 <hr>
   <h2>Utilisateurs suivi</h2>
+  <ul>
     {% for follow in user.follows.all %}
-    <p>{{ follow }}</p>
+    <li>
+      {{ follow }}
+      <form method="post" action="{% url 'unfollow_users' follow.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Unfollow</button>
+      </form>
+    </li>
     {% endfor %}
-
+  </ul>
 {% endblock content %}
