@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'blog/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
   <title>LITRevu</title>
 </head>
 
@@ -23,18 +23,21 @@
       {% endif %}
     </nav>
   </header>
-
-  {% block content %}{% endblock content %}
-  {% if user.is_authenticated %}
-        {% if user.profile_photo %}
-        <img class="avatar" src="{{ user.profile_photo.url }}" alt="">
-      {% else %}
-        <img class="avatar" src="{% static 'blog/images/default_profile.png' %}" alt="">
-      {% endif %}
-    <p>Salut {{ request.user }}.</p>
-    <a href="{% url 'profile_photo_upload' %}">Changer la photo de profil</a>
-    <a href="{% url 'passwordchange' %}">Changer le mot de passe</a>
-
-  {% endif %}
+  <main>
+    {% block content %}{% endblock content %}
+  </main>
+  <footer>
+    {% if user.is_authenticated %}
+          {% if user.profile_photo %}
+          <img class="avatar" src="{{ user.profile_photo.url }}" alt="">
+        {% else %}
+          <img class="avatar" src="{% static '/images/default_profile.png' %}" alt="">
+        {% endif %}
+      <p>Salut {{ request.user }}.</p>
+      <a href="{% url 'profile_photo_upload' %}">Changer la photo de profil</a>
+      <a href="{% url 'passwordchange' %}">Changer le mot de passe</a>
+  
+    {% endif %}
+  </footer>
 </body>
 </html>

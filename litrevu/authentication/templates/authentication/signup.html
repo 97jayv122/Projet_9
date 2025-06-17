@@ -8,6 +8,8 @@
 <form action="" method="post">
   {{ form.as_p }}
   {% csrf_token %}
-  <button type="submit">S'inscrire</button>>
+  <button type="submit">S'inscrire</button>
 </form>
+<a href="{% url 'login' %}"><button>Retour</button></a>
+
 {% endblock content %}

@@ -1,3 +1,4 @@
+from itertools import chain
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -12,11 +13,16 @@ def home(request):
     reviews = models.Review.objects.filter(
         user__in=request.user.follows.all()
     )
+    tickets_and_reviews = sorted(
+        chain(tickets, reviews),
+        key=lambda instance : instance.time_created,
+        reverse=True
+    )
+    context = {
+        'tickets_and_reviews': tickets_and_reviews,
+    }
     return render(request,
-                  'blog/home.html', context={
-                      'tickets': tickets,
-                      'reviews': reviews
-                      })
+                  'blog/home.html', context=context)
 
 @login_required
 def create_review(request, ticket_id):

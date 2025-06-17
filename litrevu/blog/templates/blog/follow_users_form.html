@@ -6,4 +6,10 @@
     {% csrf_token %}
     <button type="submit">Suivre</button>
   </form>
+<hr>
+  <h2>Utilisateurs suivi</h2>
+    {% for follow in user.follows.all %}
+    <p>{{ follow }}</p>
+    {% endfor %}
+
 {% endblock content %}

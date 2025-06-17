@@ -1,24 +1,13 @@
 {% extends 'base.html' %}
+{% load blog_extras %}
 {% block content %}
-  <h2>Billet : </h2>
-  <div class="flux">
-    {% for ticket in tickets %}
-    <div class="post">
-      <a href="{% url 'create-review' ticket.id %}"><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}">
-        <p>{{ ticket.title }}</p>
-      </a>
-    </div>
+  <h2>Votre Flux </h2>
+    {% for instance in tickets_and_reviews %}
+      {% if instance|model_type == 'Ticket' %}
+        {% include 'blog/partials/ticket_snippet.html' with ticket=instance %}
+      {% elif instance|model_type == 'Review' %}
+        {% include 'blog/partials/review_snippet.html' with review=instance %}
+      {% endif %}
     {% endfor %}
-  </div>
-  <h2>Critique :</h2>
-    <div class="flux">
-    {% for review in reviews %}
-    <div class="post">
-      <a href="{% url 'view-review' review.ticket.id review.id %}">
-        <p>{{ review.rating }} stars</p>
-        <p>{{ review.headline }}</p>
-        <p>{{ review.user }} {{ review.time_created }}</p>
-      </a>
-    </div>
-    {% endfor %}
-{% endblock %}
+
+{% endblock content %}
