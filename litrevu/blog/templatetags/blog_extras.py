@@ -25,3 +25,17 @@ def get_posted_at_display(posted_at):
     elif seconds_ago <= DAY:
         return f'Publié il y a {int(seconds_ago // HOUR)} heures.'
     return f'Publié le {posted_at.strftime("%d %b %Y à %Hh%M")}'
+
+@register.filter
+def is_reviewed_by(ticket, user):
+    """
+    Retourne True si l'utilisateur a déjà posté une review pour ce ticket.
+    """
+    return ticket.review_set.filter(user=user).exists()
+
+@register.filter
+def is_author(instance, user):
+    """
+    Retourne True si l'utilistaur est l'auteur de ce post
+    """
+    return instance.user == user

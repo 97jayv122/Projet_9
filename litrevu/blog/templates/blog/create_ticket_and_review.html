@@ -1,15 +1,13 @@
+{# templates/blog/create_ticket_and_review.html #}
 {% extends 'base.html' %}
 {% block content %}
-<h2>Création d'un billet </h2>
-<form action=""method="post" enctype="multipart/form-data">
-  {{ ticket_form.as_p }}
-  {% csrf_token %}
-  <button type="submit">Publier</button>
-</form>
-<h2>Création d'une critique pour ce billet</h2>
-<form action="" method="post">
-  {{ review_form }}
-  {% csrf_token %}
-  <button type="submit">Publier</button>
-</form>
+  <h2>Création d'un billet et de sa critique</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ ticket_form.management_form }} {# si c'est un Formset #}
+    {{ ticket_form.as_p }}
+    <hr>
+    {{ review_form.as_p }}
+    <button type="submit">Publier le billet + la critique</button>
+  </form>
 {% endblock %}

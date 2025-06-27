@@ -14,7 +14,7 @@
     <nav>
       {% if user.is_authenticated %}
         <a href="{% url 'home' %}">Flux</a>
-        <a href="{% url 'create-ticket' %}">Posts</a>
+        <a href="{% url 'posts' %}">Posts</a>
         <a href="{% url 'follow_users' %}">Suivre des utilisateurs</a>
         <form action="{% url 'logout' %}" method="post">
           {% csrf_token %}

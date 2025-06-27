@@ -18,14 +18,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+import authentication.forms
 import authentication.views
 import blog.views
+from authentication.forms import CustomAuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView,PasswordChangeDoneView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LoginView.as_view(
         template_name='authentication/login.html',
+        authentication_form=CustomAuthenticationForm,
         redirect_authenticated_user=True),
         name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
@@ -43,12 +47,19 @@ urlpatterns = [
     path('photo/profile/upload', authentication.views.upload_profile_photo,
          name='profile_photo_upload'),
     path('create/ticket', blog.views.create_ticket, name="create-ticket"),
-    path('ticket/<int:ticket_id>/redit-review', blog.views.create_review,
+    path('ticket/<int:ticket_id>/edit-review', blog.views.create_review,
           name='create-review'),
+    path('create/review-ticket', blog.views.create_ticket_and_review,
+          name='create-review-ticket'),
     path('review<int:review_id>/ticket<int:ticket_id>', blog.views.view_review,
          name='view-review'),
     path('follow-users', blog.views.follow_users, name='follow_users'),
-    path('unfollow/<int:user_id>/', blog.views.unfollow_users, name='unfollow_users'),
+    path('unfollow/<int:user_id>/', blog.views.unfollow_users,
+          name='unfollow_users'),
+    path('posts', blog.views.display_posts, name='posts'),
+    path('edit/ticket/<int:ticket_id>', blog.views.edit_ticket, name='edit_ticket'),
+    path('edit/review/<int:review_id>', blog.views.edit_review, name='edit_review'),
+
 ]
 
 if settings.DEBUG:

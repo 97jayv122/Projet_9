@@ -2,18 +2,24 @@
 {% load static %}
 {% load blog_extras %}
 <div class="ticket">
-  <a href="{% url 'create-review' ticket.id %}"><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}">
+  <img src="{% if ticket.image %}{{ ticket.image.url }}{% endif %}"
+    alt="{{ ticket.title }}">
     <div class="post">
+      <p>{% if ticket.user.profile_photo %}
+            <img class="avatar" src="{{ ticket.user.profile_photo.url }}" alt="">
+          {% else %}
+            <img class="avatar" src="{% static '/images/default_profile.png' %}" alt="">
+          {% endif %}
+        Auteur : 
+      {% get_poster_display ticket.user %}</p>
       <h3>{{ ticket.title }}</h3>
       <p>{{ ticket.description }}</p>
-        <p>{% if ticket.uploader.profile_photo %}
-              <img class="avatar" src="{{ ticket.uploader.profile_photo.url }}" alt="">
-            {% else %}
-              <img class="avatar" src="{% static '/images/default_profile.png' %}" alt="">
-            {% endif %}
-          Auteur : 
-        {% get_poster_display ticket.uploader %}</p>
       <p>{% get_posted_at_display ticket.time_created %}</p>
-    </div>
-  </a>  
+      {% if ticket|is_author:user %}
+        <a href="{% url 'edit_ticket' ticket.id %}"><button>Modifier</button></a>
+      {% endif %}
+      {% if not ticket|is_reviewed_by:user %}
+        <a href="{% url 'create-review' ticket.id %}"><button>Créer une critique</button></a>
+      {% endif %}
+    </div> 
 </div>
