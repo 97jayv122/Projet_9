@@ -1,25 +1,52 @@
-
 {% load static %}
 {% load blog_extras %}
-<div class="ticket">
-  <img src="{% if ticket.image %}{{ ticket.image.url }}{% endif %}"
-    alt="{{ ticket.title }}">
-    <div class="post">
-      <p>{% if ticket.user.profile_photo %}
-            <img class="avatar" src="{{ ticket.user.profile_photo.url }}" alt="">
-          {% else %}
-            <img class="avatar" src="{% static '/images/default_profile.png' %}" alt="">
-          {% endif %}
-        Auteur : 
-      {% get_poster_display ticket.user %}</p>
-      <h3>{{ ticket.title }}</h3>
-      <p>{{ ticket.description }}</p>
-      <p>{% get_posted_at_display ticket.time_created %}</p>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="d-flex align-items-center mb-3">
+      {% if ticket.user.profile_photo %}
+        <img src="{{ ticket.user.profile_photo.url }}" alt="Avatar"
+             class="rounded-circle me-2" width="40" height="40">
+      {% else %}
+        <img src="{% static 'images/default_profile.png' %}" alt="Avatar"
+             class="rounded-circle me-2" width="40" height="40">
+      {% endif %}
+      <small class="text-muted">
+        Auteur : {% get_poster_display ticket.user %}
+      </small>
+    </div>
+
+    <h5 class="card-title">{{ ticket.title }}</h5>
+    <p class="card-text">{{ ticket.description }}</p>
+
+    <p class="card-text">
+      <small class="text-muted">
+        {% get_posted_at_display ticket.time_created %}
+      </small>
+    </p>
+
+    <div class="mt-3">
       {% if ticket|is_author:user %}
-        <a href="{% url 'edit_ticket' ticket.id %}"><button>Modifier</button></a>
+        <a href="{% url 'edit_ticket' ticket.id %}"
+           class="btn btn-sm btn-outline-primary me-2">
+          Modifier
+        </a>
       {% endif %}
       {% if not ticket|is_reviewed_by:user %}
-        <a href="{% url 'create-review' ticket.id %}"><button>Créer une critique</button></a>
+        <a href="{% url 'create-review' ticket.id %}"
+           class="btn btn-sm btn-success">
+          Créer une critique
+        </a>
       {% endif %}
-    </div> 
+    </div>
+  </div>
+
+  {% if ticket.image %}
+    <div class="card-footer text-start bg-white">
+      <img src="{{ ticket.image.url }}" 
+           alt="{{ ticket.title }}"
+           class="img-fluid"
+           style="max-width: 200px; max-height: 200px; object-fit: cover;">
+    </div>
+  {% endif %}
 </div>

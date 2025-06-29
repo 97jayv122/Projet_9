@@ -7,7 +7,7 @@
     <button type="submit">Suivre</button>
   </form>
 <hr>
-  <h2>Utilisateurs suivi</h2>
+  <h2>Abonnements</h2>
   <ul>
     {% for follow in user.follows.all %}
     <li>
@@ -16,6 +16,14 @@
         {% csrf_token %}
         <button type="submit">Unfollow</button>
       </form>
+    </li>
+    {% endfor %}
+  </ul>
+  <h2>Abonnés</h2>
+  <ul>
+    {% for follower in user.followers.all %}
+    <li>
+      {{ follower }}
     </li>
     {% endfor %}
   </ul>

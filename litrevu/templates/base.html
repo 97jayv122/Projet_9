@@ -1,43 +1,76 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LITRevu</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="{% static 'styles.css' %}"> -->
 </head>
+<body class="d-flex flex-column min-vh-100">
 
-<body>
-  <header>
-  <h1>LITrevu</h1>
-    <nav>
-      {% if user.is_authenticated %}
-        <a href="{% url 'home' %}">Flux</a>
-        <a href="{% url 'posts' %}">Posts</a>
-        <a href="{% url 'follow_users' %}">Suivre des utilisateurs</a>
-        <form action="{% url 'logout' %}" method="post">
-          {% csrf_token %}
-          <button type="submit">Se déconnecter</button>
-        </form>
-      {% endif %}
-    </nav>
-  </header>
-  <main>
-    {% block content %}{% endblock content %}
-  </main>
-  <footer>
-    {% if user.is_authenticated %}
-          {% if user.profile_photo %}
-          <img class="avatar" src="{{ user.profile_photo.url }}" alt="">
-        {% else %}
-          <img class="avatar" src="{% static '/images/default_profile.png' %}" alt="">
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">LITRevu</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#mainNavbar" aria-controls="mainNavbar"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        {% if user.is_authenticated %}
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Flux</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'posts' %}">Posts</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'follow_users' %}">Suivre</a></li>
+          </ul>
+          <form class="d-flex" action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger" type="submit">Se déconnecter</button>
+          </form>
         {% endif %}
-      <p>Salut {{ request.user }}.</p>
-      <a href="{% url 'profile_photo_upload' %}">Changer la photo de profil</a>
-      <a href="{% url 'passwordchange' %}">Changer le mot de passe</a>
-  
-    {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-fill container py-4">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-light text-center text-lg-start mt-auto py-3 border-top">
+    <div class="container d-flex flex-column flex-lg-row align-items-center justify-content-between">
+      {% if user.is_authenticated %}
+        <div class="d-flex align-items-center mb-3 mb-lg-0">
+          {% if user.profile_photo %}
+            <img src="{{ user.profile_photo.url }}" alt="Avatar"
+                 class="rounded-circle me-2" width="40" height="40">
+          {% else %}
+            <img src="{% static 'images/default_profile.png' %}" alt="Avatar"
+                 class="rounded-circle me-2" width="40" height="40">
+          {% endif %}
+          <span>Salut, {{ user.username }} !</span>
+        </div>
+        <div>
+          <a href="{% url 'profile_photo_upload' %}" class="btn btn-sm btn-outline-primary me-2">Photo</a>
+          <a href="{% url 'passwordchange' %}" class="btn btn-sm btn-outline-secondary">Mot de passe</a>
+        </div>
+      {% else %}
+        <span class="text-muted">© {{ now.year }} LITRevu</span>
+      {% endif %}
+    </div>
   </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"></script>
 </body>
 </html>

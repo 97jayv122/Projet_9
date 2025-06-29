@@ -1,15 +1,38 @@
 {% extends 'base.html' %}
 {% load blog_extras %}
 {% block content %}
-  <h2>Votre Flux </h2>
-  <a href="{% url 'create-ticket' %}"><button>Demander une critique</button></a>
-  <a href="{% url 'create-review-ticket' %}"><button>Créer une critique</button></a>
-    {% for instance in tickets_and_reviews %}
-      {% if instance|model_type == 'Ticket' %}
-        {% include 'blog/partials/ticket_snippet.html' with ticket=instance %}
-      {% elif instance|model_type == 'Review' %}
-        {% include 'blog/partials/review_snippet.html' with review=instance %}
-      {% endif %}
-    {% endfor %}
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="m-0">Votre Flux</h2>
+    <div>
+      <a href="{% url 'create-ticket' %}" class="btn btn-outline-success me-2">
+        Demander une critique
+      </a>
+      <a href="{% url 'create-review-ticket' %}" class="btn btn-outline-primary">
+        Créer une critique
+      </a>
+    </div>
+  </div>
 
+  {# Deux colonnes sur md+, une seule colonne sur mobile #}
+  <div class="row row-cols-1 g-4">
+    {% for instance in tickets_and_reviews %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          {% if instance|model_type == 'Ticket' %}
+            {% include 'blog/partials/ticket_snippet.html' with ticket=instance %}
+          {% elif instance|model_type == 'Review' %}
+            {% include 'blog/partials/review_snippet.html' with review=instance %}
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-info text-center">
+          Aucun ticket ni review pour l’instant.
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock content %}

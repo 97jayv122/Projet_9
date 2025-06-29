@@ -5,15 +5,22 @@ from django import forms
 class SignupForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(
         attrs={
+            'class': 'form-control',
             "placeholder": "Nom d'utilisateur"}),
         label=""
     )
     password1 = forms.CharField(widget=forms.PasswordInput(
-        attrs={"placeholder": "Mot de passe"}),
+        attrs={
+            'class': 'form-control',
+            "placeholder": "Mot de passe"
+            }),
         label=""
     )
     password2 = forms.CharField(widget=forms.PasswordInput(
-        attrs={"placeholder": "Confirmer mot de passe"}),
+        attrs={
+            'class': 'form-control',
+            "placeholder": "Confirmer mot de passe"
+            }),
         label=""
     )
     class Meta(UserCreationForm.Meta):
@@ -29,6 +36,7 @@ class UploadProfilePhotoform(forms.ModelForm):
 class CustomAuthenticationForm(AuthenticationForm):
     username = UsernameField(
         widget=forms.TextInput(attrs={
+            'class': 'form-control',
             'autofocus': True,
             'placeholder': "Nom d'utilisateur",
         }),
@@ -37,6 +45,7 @@ class CustomAuthenticationForm(AuthenticationForm):
     password = forms.CharField(
         strip=False,
         widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
             'placeholder': "Mot de passe",
         }),
         label=""

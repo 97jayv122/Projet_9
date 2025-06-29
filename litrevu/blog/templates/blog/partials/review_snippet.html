@@ -1,26 +1,40 @@
 {% load static %}
 {% load blog_extras %}
-<div class="feed-review">
-  <div class="review">
-    {% if review.user.profile_photo %}
-      <img class="avatar" src="{{ review.user.profile_photo.url }}" alt="">
-    {% else %}
-      <img class="avatar" src="{% static '/images/default_profile.png' %}" alt="">
-    {% endif %}
-    <div class="post">
-      <a href="{% url 'view-review' review.ticket.id review.id %}">
-        <h3>{{ review.ticket.title }}</h3>
-        <p>{{ review.rating }}/5 stars</p>
-        <p>{{ review.headline }}</p>
-        <p>Auteur :{% get_poster_display review.user %} </p> 
-        <p>{% get_posted_at_display review.time_created %}</p>  
-      </a>
-      {% if review|is_author:user %}
-        <a href="{% url 'edit_review' review.id %}"><button>Modifier</button></a>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="d-flex align-items-center mb-3">
+      {% if review.user.profile_photo %}
+        <img src="{{ review.user.profile_photo.url }}" alt="Avatar"
+             class="rounded-circle me-2" width="40" height="40">
+      {% else %}
+        <img src="{% static 'images/default_profile.png' %}" alt="Avatar"
+             class="rounded-circle me-2" width="40" height="40">
       {% endif %}
+      <div>
+        <a href="{% url 'view-review' review.ticket.id review.id %}" class="text-decoration-none">
+          <h5 class="card-title mb-0">{{ review.ticket.title }}</h5>
+        </a>
+        <small class="text-muted">
+          {% get_poster_display review.user %} · {% get_posted_at_display review.time_created %}
+        </small>
+      </div>
     </div>
+
+    <p class="mb-1"><strong>{{ review.rating }}/5</strong></p>
+    <h6 class="mb-3">{{ review.headline }}</h6>
+
+    {% if review|is_author:user %}
+      <a href="{% url 'edit_review' review.id %}"
+         class="btn btn-sm btn-outline-primary">
+        Modifier
+      </a>
+    {% endif %}
   </div>
-  <div class="ticket-review">
-    {% include 'blog/partials/ticket_snippet.html' with ticket=review.ticket %}
-  </div>
+
+  {% if review.ticket %}
+    <div class="card-footer bg-light">
+      {% include 'blog/partials/ticket_snippet.html' with ticket=review.ticket %}
+    </div>
+  {% endif %}
 </div>

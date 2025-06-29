@@ -104,10 +104,11 @@ def edit_review(request, review_id):
         if 'delete_review' in request.POST:
             delete_form = forms.DeleteReviewForm(request.POST)
             if delete_form.is_valid:
-                review.delete(settings.LOGIN_REDIRECT_URL)
-                return redirect
+                review.delete
+                return redirect(settings.LOGIN_REDIRECT_URL)
     context={
         'edit_form':edit_form,
+        'review': review,
         'delete_form': delete_form
     }
     return render(request, 'blog/edit_review.html', context=context)
@@ -167,7 +168,6 @@ def view_review(request, ticket_id, review_id):
 
 @login_required
 def follow_users(request):
-    user = User.objects.filter(follow=request.user)
     form = forms.FollowUsersForm(instance=request.user)
     if request.method == 'POST':
         form = forms.FollowUsersForm(request.POST, instance=request.user)
@@ -177,7 +177,6 @@ def follow_users(request):
     return render(request,
                   'blog/follow_users_form.html', context={
                       'form': form,
-                      'user': user,
                       })
 
 @login_required

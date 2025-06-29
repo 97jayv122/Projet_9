@@ -1,17 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="signup">
-  <h2>Inscription</h2>
-  {% if form.errors %}
-    {{ form.errors }}
-  {% endif %}
-  <form action="" method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <div class="signup-button">
-      <button type="submit">S'inscrire</button>
-      <a href="{% url 'login' %}"><button>Retour</button></a>
+<div class="container mt-5" style="max-width: 400px;">
+  <h2 class="mb-4 text-center">Inscription</h2>
+
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+      {{ form.non_field_errors }}
     </div>
+  {% endif %}
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="mb-3">
+        {{ field }}
+        {% if field.errors %}
+          <div class="invalid-feedback d-block">
+            {{ field.errors|striptags }}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
+    <a href="{% url 'login' %}" class="btn btn-link w-100 mt-2">Retour</a>
   </form>
 </div>
-{% endblock content %}
+{% endblock %}
