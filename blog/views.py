@@ -13,13 +13,14 @@ User = get_user_model()
 @login_required
 def home(request):
     following = list(request.user.follows.all()) + [request.user]
-
-    tickets = models.Ticket.objects.filter(
-        user__in=following
-    )
+    blocked = request.user.bloked.all()
+    blocked_by = request.user.blocked_by.all()
+    tickets = models.Ticket.objects.filter(user__in=following)\
+                                    .exclude(user__in=blocked)\
+                                    .exclude(user__in=blocked_by)
     reviews = models.Review.objects.filter(
-        user__in=following
-    )
+        Q(user__in=following) | Q(ticket__user=request.user)
+    ).exclude(user__in=blocked).exclude(user__in=blocked_by)
 
     tickets_and_reviews = sorted(
         chain(tickets, reviews),
