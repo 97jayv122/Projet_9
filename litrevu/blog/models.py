@@ -26,8 +26,11 @@ class Ticket(models.Model):
 
 class Review(models.Model):
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
+    RATING_CHOICES = [(i, f"{i} étoile{'s' if i>1 else ''}") for i in range(1, 6)]
     rating = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(5)])
+        choices=RATING_CHOICES,
+        default=3,
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
     headline = models.CharField(max_length=128)
     body = models.CharField(max_length=8192, blank=True)
     user = models.ForeignKey(

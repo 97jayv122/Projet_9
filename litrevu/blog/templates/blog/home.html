@@ -13,26 +13,49 @@
       </a>
     </div>
   </div>
-
-  {# Deux colonnes sur md+, une seule colonne sur mobile #}
   <div class="row row-cols-1 g-4">
-    {% for instance in tickets_and_reviews %}
-      <div class="col">
-        <div class="card h-100 shadow-sm">
-          {% if instance|model_type == 'Ticket' %}
-            {% include 'blog/partials/ticket_snippet.html' with ticket=instance %}
-          {% elif instance|model_type == 'Review' %}
-            {% include 'blog/partials/review_snippet.html' with review=instance %}
-          {% endif %}
-        </div>
+    {% for instance in page_obj %}
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        {% if instance|model_type == 'Ticket' %}
+        {% include 'blog/partials/ticket_snippet.html' with ticket=instance %}
+        {% elif instance|model_type == 'Review' %}
+        {% include 'blog/partials/review_snippet.html' with review=instance %}
+        {% endif %}
       </div>
+    </div>
     {% empty %}
-      <div class="col-12">
-        <div class="alert alert-info text-center">
-          Aucun ticket ni review pour l’instant.
-        </div>
+    <div class="col-12">
+      <div class="alert alert-info text-center">
+        Aucun ticket ni review pour l’instant.
       </div>
+    </div>
     {% endfor %}
   </div>
+  <nav class="d-flex justify-content-center aria-label="page-navigation">
+    <span>
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1">« première</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">précédente</a>
+        </li>
+        {% endif %}
+        <span class="mt-2 mx-2">
+          Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+        </span>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">suivante</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">dernière »</a>
+        </li>
+        {% endif %}
+      </span>
+      </ul>
+  </nav>
 </div>
 {% endblock content %}

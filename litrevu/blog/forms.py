@@ -6,7 +6,12 @@ User = get_user_model()
 
 
 class FollowUsersForm(forms.ModelForm):
-    username = forms.CharField(label="Nom d’utilisateur à suivre")
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            "placeholder": "Nom d'utilisateur"}),
+        label=""
+    )
 
     class Meta:
         model = User
@@ -36,17 +41,31 @@ class TicketForm(forms.ModelForm):
         model = models.Ticket
         fields = ['title', 'description', 'image']
         widgets = {
-                    'image': forms.ClearableFileInput(attrs={'required': False}),
+                    'title': forms.TextInput(attrs={
+                        'class': 'form-control',
+                    }),
+                    'image': forms.ClearableFileInput(attrs={
+                        'class': 'form-control',
+                        'required': False
+                        }),
                     'description': forms.Textarea(attrs={
+                        'class': 'form-control',
                         'rows': 7,
-                        'placeholder': 'Description',
                     })
                 }
         labels = {
             'title'      : "Titre du billet :",
-            'description': "Texte / Description :",
+            'description': "Description :",
             'image'      : "Illustration (facultatif) :"
         }
+        error_messages = {
+            'title' : {
+                'required': '',
+            },
+            'description': {
+                'required': '',
+            }
+            },
 
 
 class DeleteTicketForm(forms.Form):
@@ -64,9 +83,16 @@ class ReviewForm(forms.ModelForm):
             'body': 'Commentaire'
         }
         widgets = {
+            'headline':forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'rating': forms.RadioSelect(
+                attrs={'class': 'star-rating'}),
             'body': forms.Textarea(attrs={
+                'class': 'form-control',
                 'rows': 7,
-                'placeholder': 'Votre commentaire…',
             }),
         }
 

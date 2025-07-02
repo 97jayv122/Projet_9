@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Modifier votre critique</h2>
-<form action="" method="post">
-  {{ edit_form.as_p }}
-  {% csrf_token %}
-  <button type="submit">Enregistrer</button>
-</form>
+<h2 class="mb-4 text-center">Modifier votre critique</h2>
+<div class="container">
+  <div class="w-75 mx-auto">
+    {% include 'blog/partials/ticket_snippet.html' with ticket=review.ticket %}
+  </div>
+</div>
 <hr>
+
+  <form method="post">
+    {% csrf_token %}
+    {% include 'blog/partials/edit_review.html' with form=review_form %}
+   <button type="submit" class="btn btn-primary">Envoyer</button>
+  </form>
 <h3>Supprimer votre critique</h3>
 <form action=""method="post">
   {{ delete_form.as_p }}
   {% csrf_token %}
-  <button type="submit">Supprimer</button>
+  <button class="btn btn-primary" type="submit">Supprimer</button>
 </form>
 {% endblock content %}

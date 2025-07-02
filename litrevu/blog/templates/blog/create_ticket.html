@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Création d'un billet :</h2>
-  <form action="" method="post" enctype="multipart/form-data">
-    {{ form.as_p }}
+  <h2 class="mb-4">Création d'un billet :</h2>
+    <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <button type="submit">Publier</button>
+    {% include 'blog/partials/edit_ticket.html' with form=ticket_form %}
+    <button class="btn btn-primary" type="submit">Publier</button>
   </form>
+
 {% endblock content %}

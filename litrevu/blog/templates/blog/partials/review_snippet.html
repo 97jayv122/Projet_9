@@ -12,7 +12,7 @@
              class="rounded-circle me-2" width="40" height="40">
       {% endif %}
       <div>
-        <a href="{% url 'view-review' review.ticket.id review.id %}" class="text-decoration-none">
+        <a href="{% url 'view-review' review.id %}" class="text-decoration-none">
           <h5 class="card-title mb-0">{{ review.ticket.title }}</h5>
         </a>
         <small class="text-muted">
@@ -20,6 +20,18 @@
         </small>
       </div>
     </div>
+  <div class="d-inline-flex align-items-center">
+    {% for i in "12345" %}
+      {% with val=i %}
+        {% if val|to_int <= review.rating %}
+          <i class="bi bi-star-fill fs-5 text-warning"></i>
+        {% else %}
+          <i class="bi bi-star fs-5 text-secondary"></i>
+        {% endif %}
+      {% endwith %}
+    {% endfor %}
+  </div>
+
 
     <p class="mb-1"><strong>{{ review.rating }}/5</strong></p>
     <h6 class="mb-3">{{ review.headline }}</h6>

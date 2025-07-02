@@ -39,3 +39,10 @@ def is_author(instance, user):
     Retourne True si l'utilistaur est l'auteur de ce post
     """
     return instance.user == user
+
+@register.filter
+def to_int(value):
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return 0

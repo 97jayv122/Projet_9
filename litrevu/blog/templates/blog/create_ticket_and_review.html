@@ -4,10 +4,10 @@
   <h2>Création d'un billet et de sa critique</h2>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ ticket_form.management_form }} {# si c'est un Formset #}
-    {{ ticket_form.as_p }}
+    {% include 'blog/partials/edit_ticket.html' with form=ticket_form %}
+
     <hr>
-    {{ review_form.as_p }}
-    <button type="submit">Publier le billet + la critique</button>
-  </form>
+      {% include 'blog/partials/edit_review.html' with form=review_form %}
+   <button type="submit" class="btn btn-primary">Publier le billet + la critique</button>
+
 {% endblock %}

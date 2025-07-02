@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>Modifier votre billet</h2>
-<form action="" method="post">
-  {{ edit_form.as_p }}
+<form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <button type="submit">Enregistrer</button>
+  {% include 'blog/partials/edit_ticket.html' with form=ticket_form %}
+  <button class="btn btn-primary" type="submit">Enregistrer</button>
 </form>
 <hr>
 <h3>Supprimer votre billet</h3>
 <form action=""method="post">
   {{ delete_form.as_p }}
   {% csrf_token %}
-  <button type="submit">Supprimer</button>
+  <button class="btn btn-primary" type="submit">Supprimer</button>
 </form>
 {% endblock content %}

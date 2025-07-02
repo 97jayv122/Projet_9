@@ -1,30 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Suivre des utilisateurs</h2>
-  <form action="" method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit">Suivre</button>
-  </form>
-<hr>
-  <h2>Abonnements</h2>
-  <ul>
+  <h3 class="my-4 text-center">Suivre des utilisateurs</h3>
+  <div class="mb-4 row">
+    <form action="" method="post">
+      {{ form.as_p }}
+      {% csrf_token %}
+      <button class="btn btn-primary" type="submit">Suivre</button>
+    </form>
+  </div>
+  <h3 class="my-4 text-center">Abonnements</h3>
+  <table class="mb-4 table table-light">
     {% for follow in user.follows.all %}
-    <li>
-      {{ follow }}
-      <form method="post" action="{% url 'unfollow_users' follow.id %}" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit">Unfollow</button>
-      </form>
-    </li>
-    {% endfor %}
-  </ul>
-  <h2>Abonnés</h2>
-  <ul>
+    
+    <tbody>
+      <tr>
+        <td class="ps-4">{{ follow }}</td>
+        <td>
+          <form method="post" action="{% url 'unfollow_users' follow.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button class="btn btn-secondary float-end" type="submit">Unfollow</button>
+          </form>
+        </td>
+      </tbody>
+      {% endfor %}
+    </tr>
+  </table>
+  <h3 class="my-4 text-center">Abonnés</h3>
+  <table class="mb-4 table table-light">
     {% for follower in user.followers.all %}
-    <li>
-      {{ follower }}
-    </li>
+    <tbody>
+      <td class="ps-4">
+        {{ follower }}
+      </td>
+    </tbody>
     {% endfor %}
-  </ul>
+  </table>
 {% endblock content %}

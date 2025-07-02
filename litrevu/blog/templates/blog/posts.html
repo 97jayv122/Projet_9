@@ -1,13 +1,37 @@
 {% extends 'base.html' %}
 {% load blog_extras %}
 {% block content %}
-  <h2>Mes posts</h2>
-    {% for instance in tickets_and_reviews %}
+  <h2 class="mb-4 text-center">Mes posts</h2>
+    {% for instance in page_obj %}
       {% if instance|model_type == 'Ticket' %}
         {% include 'blog/partials/ticket_snippet.html' with ticket=instance %}
       {% elif instance|model_type == 'Review' %}
         {% include 'blog/partials/review_snippet.html' with review=instance %}
       {% endif %}
     {% endfor %}
-
+  <nav class="d-flex justify-content-center aria-label="page-navigation">
+    <span>
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1">« première</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">précédente</a>
+        </li>
+        {% endif %}
+        <span class="mt-2 mx-2">
+          Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+        </span>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">suivante</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">dernière »</a>
+        </li>
+        {% endif %}
+      </span>
+      </ul>
+  </nav>
 {% endblock content %}
