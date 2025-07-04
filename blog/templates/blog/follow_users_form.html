@@ -8,31 +8,67 @@
       <button class="btn btn-primary" type="submit">Suivre</button>
     </form>
   </div>
-  <h3 class="my-4 text-center">Abonnements</h3>
-  <table class="mb-4 table table-light">
-    {% for follow in user.follows.all %}
-    
-    <tbody>
-      <tr>
-        <td class="ps-4">{{ follow }}</td>
-        <td>
-          <form method="post" action="{% url 'unfollow_users' follow.id %}" style="display:inline;">
-            {% csrf_token %}
-            <button class="btn btn-secondary float-end" type="submit">Unfollow</button>
-          </form>
-        </td>
+    <h3 class="mt-5 mb-4 text-center">Abonnements</h3>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Utilisateur</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for follow in user.follows.all %}
+        <tr>
+          <td>{{ follow.username }}</td>
+          <td class="text-end">
+            <form method="post" action="{% url 'unfollow_users' follow.id %}" class="d-inline">
+              {% csrf_token %}
+              <button class="btn btn-outline-secondary btn-sm me-2" type="submit">Se désabonner</button>
+            </form>
+            {% if follow in user.blocked.all %}
+              <form method="post" action="{% url 'unblock_user' follow.id %}" class="d-inline">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger btn-sm" type="submit">débloquer</button>
+              </form>
+            {% else %}
+              <form method="post" action="{% url 'block_user' follow.id %}" class="d-inline">
+                {% csrf_token %}
+                <button class="btn btn-outline-success btn-sm" type="submit">Bloquer</button>
+              </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="2" class="text-center text-muted">Vous ne suivez personne.</td>
+        </tr>
+        {% endfor %}
       </tbody>
-      {% endfor %}
-    </tr>
-  </table>
-  <h3 class="my-4 text-center">Abonnés</h3>
-  <table class="mb-4 table table-light">
+    </table>
+  </div>
+
+  <!-- Followers list -->
+  <h3 class="mt-5 mb-4 text-center">Abonnés</h3>
+  <div class="list-group">
     {% for follower in user.followers.all %}
-    <tbody>
-      <td class="ps-4">
-        {{ follower }}
-      </td>
-    </tbody>
+    <div class="list-group-item d-flex align-items-center justify-content-between">
+      <span>{{ follower.username }}</span>
+      {% if follower in user.blocked.all %}
+        <form method="post" action="{% url 'unblock_user' follower.id %}" class="d-inline">
+          {% csrf_token %}
+          <button class="btn btn-outline-danger btn-sm" type="submit">débloquer</button>
+        </form>
+      {% else %}
+        <form method="post" action="{% url 'block_user' follower.id %}" class="d-inline">
+          {% csrf_token %}
+          <button class="btn btn-outline-success btn-sm" type="submit">Bloquer</button>
+        </form>
+      {% endif %}
+    </div>
+    {% empty %}
+    <div class="list-group-item text-center text-muted">Pas d’abonnés pour le moment.</div>
     {% endfor %}
-  </table>
+  </div>
+</div>
 {% endblock content %}

@@ -34,15 +34,13 @@ urlpatterns = [
         name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('home/', blog.views.home, name='home'),
-    path('passwordchange/', PasswordChangeView.as_view(
-        template_name='authentication/registration.html',
-        success_url='passwordchanged'
-    ),
-         name='passwordchange'),
-    path('passwordchanged/', PasswordChangeDoneView.as_view(
-        template_name='authentication/password_change_done.html'
-    ),
-         name='passwordchanged'),
+    path('password_change/', authentication.views.password_change, name='password_change'),
+    # path('passwordchange/', PasswordChangeView.as_view(
+    #     template_name='authentication/registration.html',
+    #     success_url='passwordchanged'),name='passwordchange'),
+    path('password_change/done/', PasswordChangeDoneView.as_view(
+             template_name='registration/password_change_done.html'),
+         name='password_change_done'),
     path('signup/',authentication.views.signup, name='signup'),
     path('photo/profile/upload', authentication.views.upload_profile_photo,
          name='profile_photo_upload'),
@@ -57,9 +55,10 @@ urlpatterns = [
     path('unfollow/<int:user_id>/', blog.views.unfollow_users,
           name='unfollow_users'),
     path('posts', blog.views.display_posts, name='posts'),
-    path('edit/ticket/<int:ticket_id>', blog.views.edit_ticket, name='edit_ticket'),
+    path('edit/ticket/<int:ticket_id>', blog.views.edit_ticket,name='edit_ticket'),
     path('edit/review/<int:review_id>', blog.views.edit_review, name='edit_review'),
-
+    path('blocks-users/<int:user_id>/', blog.views.blocked_users, name='block_user'),
+    path('unblocks-users/<int:user_id>/', blog.views.unblocked_users, name='unblock_user'),
 ]
 
 if settings.DEBUG:

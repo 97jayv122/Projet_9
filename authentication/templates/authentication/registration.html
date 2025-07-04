@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Changement de mot de passe</h1>
-<form action="" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Modifier</button>
-</form>
+<div class="container mt-5" style="max-width: 500px;">
+  <h2>Changement de mot de passe</h2>
+  <form action="" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      {{ form.as_p }}
+    </div>
+    <div class="d-grid">
+      <button class="btn btn-primary" type="submit">Modifier</button>
+    </div>
+  </form>
+</div>
 {% endblock %}

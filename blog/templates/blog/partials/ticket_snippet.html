@@ -21,7 +21,12 @@
 
     <p class="card-text">
       <small class="text-muted">
-        {% get_posted_at_display ticket.time_created %}
+        {% get_posted_at_display ticket.time_created as posted_msg %}
+        {{ posted_msg }}
+        {% get_updated_at_display ticket.time_created ticket.update_at as updated_msg %}
+        {% if updated_msg %}
+          · {{ updated_msg }}
+        {% endif %}
       </small>
     </p>
 

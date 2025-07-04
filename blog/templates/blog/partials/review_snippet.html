@@ -16,7 +16,14 @@
           <h5 class="card-title mb-0">{{ review.ticket.title }}</h5>
         </a>
         <small class="text-muted">
-          {% get_poster_display review.user %} · {% get_posted_at_display review.time_created %}
+          {% get_poster_display review.user %} · 
+          {% get_posted_at_display review.time_created as posted_msg %}
+          {{ posted_msg }}
+
+          {% get_updated_at_display review.time_created review.update_at as updated_msg %}
+          {% if updated_msg %}
+            · {{ updated_msg }}
+          {% endif %}
         </small>
       </div>
     </div>
