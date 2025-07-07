@@ -1,7 +1,7 @@
 {% load static %}
 {% load blog_extras %}
 
-<div class="card mb-4">
+<div class="card bg-ticket mb-4">
   <div class="card-body">
     <div class="d-flex align-items-center mb-3">
       {% if ticket.user.profile_photo %}
@@ -31,7 +31,7 @@
     </p>
 
     <div class="mt-3">
-      {% if ticket|is_author:user %}
+      {% if show_edit and ticket|is_author:user %}
         <a href="{% url 'edit_ticket' ticket.id %}"
            class="btn btn-sm btn-outline-primary me-2">
           Modifier

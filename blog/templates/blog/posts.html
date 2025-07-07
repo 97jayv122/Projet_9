@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load blog_extras %}
 {% block content %}
-  <h2 class="mb-4 text-center">Mes posts</h2>
+  <h1 class="mb-4 text-center">Mes posts</h1>
     {% for instance in page_obj %}
       {% if instance|model_type == 'Ticket' %}
         {% include 'blog/partials/ticket_snippet.html' with ticket=instance %}

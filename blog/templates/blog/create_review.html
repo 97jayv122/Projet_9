@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Rédiger votre critique pour :</h2>
+  <h1 class="my-4 text-center">Rédiger votre critique :</h1>
   {% include 'blog/partials/ticket_snippet.html' with ticket=ticket %}
-
   <form method="post">
     {% csrf_token %}
     {% include 'blog/partials/edit_review.html' with form=review_form %}

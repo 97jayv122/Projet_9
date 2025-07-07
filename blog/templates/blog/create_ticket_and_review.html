@@ -1,7 +1,7 @@
 {# templates/blog/create_ticket_and_review.html #}
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Création d'un billet et de sa critique</h2>
+  <h1 class="my-4 text-center">Création d'un billet et de sa critique</h1>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% include 'blog/partials/edit_ticket.html' with form=ticket_form %}
@@ -9,5 +9,5 @@
     <hr>
       {% include 'blog/partials/edit_review.html' with form=review_form %}
    <button type="submit" class="btn btn-primary">Publier le billet + la critique</button>
-
+  </form>
 {% endblock %}

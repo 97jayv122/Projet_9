@@ -46,6 +46,7 @@ def home(request):
     page_obj = paginator.get_page(page_number)
     context = {
         'page_obj': page_obj,
+        'show_edit': False,
     }
     return render(request,
                   'blog/home.html', context=context)
@@ -81,6 +82,7 @@ def display_posts(request):
     page_obj = paginator.get_page(page_number)
     context = {
         'page_obj': page_obj,
+        'show_edit': True,
     }
     return render(request,
                   'blog/posts.html', context=context)
@@ -203,16 +205,18 @@ def create_ticket_and_review(request):
     """
     ticket_form = forms.TicketForm(prefix='ticket')
     review_form = forms.ReviewForm(prefix='review')
-    if request.method == 'POST' and \
-       ticket_form.is_valid() and review_form.is_valid():
-        ticket = ticket_form.save(commit=False)
-        ticket.user = request.user
-        ticket.save()
-        review = review_form.save(commit=False)
-        review.user = request.user
-        review.ticket = ticket
-        review.save()
-        return redirect(settings.LOGIN_REDIRECT_URL)
+    if request.method == 'POST':
+        ticket_form = forms.TicketForm(request.POST, request.FILES, prefix='ticket')
+        review_form = forms.ReviewForm(request.POST, prefix='review')
+        if ticket_form.is_valid() and review_form.is_valid():
+            ticket = ticket_form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.ticket = ticket
+            review.save()
+            return redirect(settings.LOGIN_REDIRECT_URL)
     return render(request, 'blog/create_ticket_and_review.html', {
         'ticket_form': ticket_form,
         'review_form': review_form,
@@ -232,7 +236,10 @@ def view_ticket(request, ticket_id):
     """
     ticket = (get_object_or_404(models.Ticket, id=ticket_id))
     return render(request,
-                  'blog/view_ticket.html', {'ticket': ticket})
+                  'blog/view_ticket.html', {
+                      'ticket': ticket,
+                      'show_edit': True
+                      })
 
 @login_required
 def create_ticket(request):
@@ -274,7 +281,8 @@ def view_review(request, review_id):
     review = (get_object_or_404(models.Review, id=review_id))
     return render(request,
                   'blog/view_review.html', context={
-                      'review': review
+                      'review': review,
+                      'show_edit': True
                   })
 
 @login_required
@@ -296,7 +304,7 @@ def follow_users(request):
         form = forms.FollowUsersForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect(settings.LOGIN_REDIRECT_URL)
+            return redirect('follow_users')
     return render(request,
                   'blog/follow_users_form.html', context={
                       'form': form,

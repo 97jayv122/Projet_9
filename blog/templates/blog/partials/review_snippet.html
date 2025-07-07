@@ -1,7 +1,7 @@
 {% load static %}
 {% load blog_extras %}
 
-<div class="card mb-4">
+<div class="card bg-review mb-4">
   <div class="card-body">
     <div class="d-flex align-items-center mb-3">
       {% if review.user.profile_photo %}
@@ -43,7 +43,7 @@
     <p class="mb-1"><strong>{{ review.rating }}/5</strong></p>
     <h6 class="mb-3">{{ review.headline }}</h6>
 
-    {% if review|is_author:user %}
+    {% if show_edit and review|is_author:user %}
       <a href="{% url 'edit_review' review.id %}"
          class="btn btn-sm btn-outline-primary">
         Modifier

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2 class="mb-4">Création d'un billet :</h2>
+  <h1 class="my-4 text-center">Création d'un billet :</h1>
     <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% include 'blog/partials/edit_ticket.html' with form=ticket_form %}
