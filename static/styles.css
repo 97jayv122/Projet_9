@@ -14,26 +14,11 @@
   position: relative;
   padding-left: 1rem;
 }
-.bg-ticket::before {
-  content: "T";
-  position: absolute;
-  left: 0.5rem; top: 50%;
-  transform: translateY(-50%);
-  font-weight: bold;
-  color: #6C8EBF;
-}
+
 
 .bg-review {
   background-color: #F4A9A8;
   border-left: 4px solid #BF6F6E; /* corail foncé */
   position: relative;
   padding-left: 1rem;
-}
-.bg-review::before {
-  content: "R";
-  position: absolute;
-  left: 0.5rem; top: 50%;
-  transform: translateY(-50%);
-  font-weight: bold;
-  color: #BF6F6E;
 }
