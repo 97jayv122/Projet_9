@@ -49,42 +49,43 @@ CritiqueHub lets users:
 ## 🛠️ Technical Specifications
 
 - **Framework:** Django  
+- **Image handling:** Pillow (>=9.0)
 - **Database:** SQLite (`db.sqlite3` included in the repo)  
 - **Code Style:** PEP 8 compliance  
-- **Database Schema:** Must match the provided ER diagram  
-- **Templates:** Use `{% include %}` for ticket and review snippets
+- **Templates:** Django template engine, utilisation de Bootstrap 5
+
 
 ---
 
 ## 📥 Installation & Local Setup
 
-1. **Clone the repository**  
-   ```bash
+1. **Clone the repository**
+
    `git clone https://github.com/97jayv122/Projet_9.git`
-   `cd LitReview`
+   `cd Projet_9`
 
 2. **Create and activate a virtual environment**
-    ```bash
+    
     `python3 -m venv .venv`
-    `source .venv/bin/activate`   # macOS/Linux
-    `.venv\Scripts\activate`       # Windows
+
+    macOS/Linux
+    `source .venv/bin/activate`
+
+    Windows
+    `.\venv\Scripts\activate`    
 
 3. **Install depandancies**
-    ```bash
     `pip install --upgrade pip`
     `pip install -r requirements.txt`
 
-4. **Apply database migrations**
-    ```bash
-    `python manage.py migrate`
-
-5. **Run the development server**
-    ```bash
+4. **Run the development server**
     `python manage.py runserver`
 
 Visit http://127.0.0.1:8000/ in your browser.
-
-
+### Log in with one of the following accounts:
+   - dev / testpassword
+   - sandrine / testpassword
+   - éric / testpassword
 
 🎯 Usage
 
@@ -101,11 +102,11 @@ Visit http://127.0.0.1:8000/ in your browser.
     From any ticket, click “Create a review” to submit your review.
 
     Ticket + Review
-    Use the “Ticket + Review” button in your feed to start a review from scratch.
+    Click “Create a review” at the top of your feed to start a review from scratch.
 
     Follow / Unfollow
     Enter a username to follow in the “Follow Users” field, or manage your following list on the dedicated page.
 
     Edit / Delete
-    Use the “Edit” and “Delete” buttons on your own tickets and reviews.
+    On the My Posts page, use the “Modify” buttons to edit your own tickets and reviews
 
