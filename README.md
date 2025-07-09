@@ -60,7 +60,7 @@ CritiqueHub lets users:
 
 1. **Clone the repository**  
    ```bash
-   `git clone https://github.com/your-username/critiquehub.git`
+   `git clone https://github.com/97jayv122/Projet_9.git`
    `cd LitReview`
 
 2. **Create and activate a virtual environment**
