@@ -1,3 +1,14 @@
+"""
+docstring: blog/models.py
+This module defines the data models for the blog application,
+including Ticket and Review.
+It includes:
+- Ticket: Represents a user-created ticket with a title,
+  description, optional image, and timestamps.
+- Review: Represents a user's review of a Ticket,
+  including a rating, headline, optional body, and timestamps.
+Both models handle image resizing and validation for ratings.
+"""
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models

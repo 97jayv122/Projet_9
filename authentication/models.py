@@ -1,11 +1,21 @@
+"""
+This module defines a custom user model for a Django application,
+extending Django's built-in AbstractUser to include additional fields
+for user profile management.
+It includes:
+- A profile photo field for user avatars.
+- Many-to-many relationships for following and blocking other users.
+This allows users to manage their social interactions within the application.
+"""
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# Create your models here.
+
 class User(AbstractUser):
     """
-    Custom user model extending Django's AbstractUser to include a profile photo,
-    follow relationships, and block relationships between users.
+    Custom user model extending Django's AbstractUser
+    to include a profile photo, follow relationships,
+    and block relationships between users.
 
     Attributes:
         profile_photo (ImageField): Optional profile image for the user.

@@ -1,6 +1,15 @@
+"""
+docstring: blog/views.py
+This module contains views for the blog application,
+handling ticket and review management,
+user interactions, and displaying content.
+It includes functionality for creating, editing,
+deleting, and viewing tickets and reviews,
+as well as user follow management.
+"""
+from itertools import chain
 from django.conf import settings
 from django.core.paginator import Paginator
-from itertools import chain
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
@@ -102,9 +111,9 @@ def create_review(request, ticket_id):
     Returns:
         HttpResponse: Renders 'blog/create_review.html' or redirects to 'view-review'.
     """
-    ticket = (get_object_or_404(models.Ticket, id=ticket_id))
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
     review_form = forms.ReviewForm()
-    if request.method == 'POST':    
+    if request.method == 'POST':
         review_form = forms.ReviewForm(request.POST)
         if review_form.is_valid():
             review = review_form.save(commit=False)
@@ -181,7 +190,7 @@ def edit_review(request, review_id):
             delete_form = forms.DeleteReviewForm(request.POST)
             if delete_form.is_valid:
                 review.delete
-                return redirect(settings.LOGIN_REDIRECT_URL)
+                return redirect('posts')
     context={
         'review_form':review_form,
         'review': review,
@@ -234,7 +243,7 @@ def view_ticket(request, ticket_id):
     Returns:
         HttpResponse: Renders 'blog/view_ticket.html' with {'ticket'}.
     """
-    ticket = (get_object_or_404(models.Ticket, id=ticket_id))
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
     return render(request,
                   'blog/view_ticket.html', {
                       'ticket': ticket,
@@ -262,7 +271,7 @@ def create_ticket(request):
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user
             ticket.save()
-            return redirect(settings.LOGIN_REDIRECT_URL)
+            return redirect('view-ticket', ticket.id)
     return render(request,
                   'blog/create_ticket.html', context={'ticket_form': ticket_form})
 
@@ -278,7 +287,7 @@ def view_review(request, review_id):
     Returns:
         HttpResponse: Renders 'blog/view_review.html' with {'review'}.
     """
-    review = (get_object_or_404(models.Review, id=review_id))
+    review = get_object_or_404(models.Review, id=review_id)
     return render(request,
                   'blog/view_review.html', context={
                       'review': review,
@@ -338,7 +347,7 @@ def blocked_users(request, user_id):
     target_user = get_object_or_404(User, id=user_id)
     request.user.blocked.add(target_user)
     return redirect('follow_users')
-    
+
 @login_required
 def unblocked_users(request, user_id):
     """

@@ -1,5 +1,16 @@
+"""
+This module defines forms for user authentication and profile management
+in a Django application.
+It includes:
+- SignupForm: For user registration with username and password fields.
+- UploadProfilePhotoForm: For uploading or updating a user's profile photo.
+- CustomAuthenticationForm: For user login with Bootstrap styling.
+It extends Django's built-in forms to provide a consistent user interface
+and validation.
+"""
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
+from django.contrib.auth.forms import (
+    UserCreationForm, AuthenticationForm, UsernameField)
 from django import forms
 
 
@@ -32,7 +43,11 @@ class SignupForm(UserCreationForm):
             }),
         label=""
     )
+
     class Meta(UserCreationForm.Meta):
+        """
+        Meta class to define the model and fields for the form.
+        """
         model = get_user_model()
         fields = ('username',)
 
@@ -45,6 +60,9 @@ class UploadProfilePhotoform(forms.ModelForm):
         profile_photo: An image file for the user's avatar.
     """
     class Meta:
+        """
+        Meta class to define the model and fields for the form.
+        """
         model = get_user_model()
         fields = ('profile_photo',)
         widgets = {

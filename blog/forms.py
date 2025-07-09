@@ -1,3 +1,14 @@
+"""
+This module contains forms for creating and managing blog tickets, reviews,
+and user interactions such as following and unfollowing users.
+It includes:
+- FollowUsersForm: For following users by username.
+- TicketForm: For creating or editing tickets with title, description, and optional image.
+- DeleteTicketForm: For confirming ticket deletion.
+- ReviewForm: For creating or editing reviews with headline, rating, and body.
+- DeleteReviewForm: For confirming review deletion.
+- UnfollowUsersForm: For confirming unfollowing a user.
+"""
 from django import forms
 from django.contrib.auth import get_user_model
 from . import models
@@ -23,6 +34,9 @@ class FollowUsersForm(forms.ModelForm):
     )
 
     class Meta:
+        """
+        Meta class to define the model and fields for the form.
+        """
         model = User
         fields = []
 
@@ -79,6 +93,8 @@ class TicketForm(forms.ModelForm):
         )
 
     class Meta:
+        """
+        Meta class to define the model and fields for the form."""
         model = models.Ticket
         fields = ['title', 'description', 'image']
         widgets = {
@@ -106,7 +122,7 @@ class TicketForm(forms.ModelForm):
             'description': {
                 'required': '',
             }
-            },
+            }
 
 
 class DeleteTicketForm(forms.Form):
@@ -119,7 +135,7 @@ class DeleteTicketForm(forms.Form):
     delete_ticket = forms.BooleanField(
         widget=forms.HiddenInput,
         initial=True
-        )  
+        )
 
 
 class ReviewForm(forms.ModelForm):
@@ -136,8 +152,10 @@ class ReviewForm(forms.ModelForm):
         widget=forms.HiddenInput,
         initial=True
         )
-    
+
     class Meta:
+        """
+        Meta class to define the model and fields for the form."""
         model = models.Review
         fields = ['headline', 'rating', 'body']
         labels = {
