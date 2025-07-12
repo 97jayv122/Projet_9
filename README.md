@@ -6,7 +6,7 @@ A Django-powered web application for requesting and publishing book or article r
 
 ## 🚀 Overview
 
-CritiqueHub lets users:
+Litreview lets users:
 
 - **Request** reviews of books or literary articles by creating a **ticket**.  
 - **Read** reviews submitted in response to tickets.  
@@ -82,6 +82,7 @@ CritiqueHub lets users:
     `python manage.py runserver`
 
 Visit http://127.0.0.1:8000/ in your browser.
+
 ### Log in with one of the following accounts:
    - dev / testpassword
    - sandrine / testpassword
